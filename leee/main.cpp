@@ -79,13 +79,21 @@ std::vector<std::vector<int>> createFrame(std::vector<std::vector<int>> mat) {
 }
 
 
-void lee(std::vector<std::vector<int>> &mat, Point start, Point dest) {
+std::vector<Point> lee(std::vector<std::vector<int>> &mat, Point start, Point dest) {
+
+	if (mat[start.x][start.y] == -1) {
+		std::cout << "Invalid starting point. Exiting program!" << std::endl;
+		exit(1);
+	}
+	if (mat[dest.x][dest.y] == -1) {
+		std::cout << "Invalid destination point. Exiting program!" << std::endl;
+		exit(1);
+	}
+
 	std::vector<int> dx = { -1 ,0,1,0 }, dy = { 0,-1,0,1 };
 	Queue<Point> queue;
 	queue.push(start);
 	mat[start.x][start.y] = 0;
-	std::cout << start.x << " " << start.y << std::endl;
-	
 
 	while (!queue.isEmpty())
 	{
@@ -108,6 +116,8 @@ void lee(std::vector<std::vector<int>> &mat, Point start, Point dest) {
 	Point current = dest;
 	std::vector<Point> route;
 	route.push_back(current);
+
+	
 	while (!current.isEqual(start)) {
 		for (int i = 0; i < 4; i++) {
 			if (mat[current.x][current.y] - mat[current.x + dx[i]][current.y + dy[i]] == 1) {
@@ -118,18 +128,13 @@ void lee(std::vector<std::vector<int>> &mat, Point start, Point dest) {
 		}
 	}
 
-	std::cout << "Route:" << std::endl;
-	for (Point i : route) {
-		std::cout << "(" << i.x << "," << i.y << ") ";
-	}
-
-	//return route;
+	return route;
 }
 
 void displayRoute(std::vector<Point> route) {
 	std::cout << "Route:" << std::endl;
-	for (Point i : route) {
-		std::cout << "(" <<i.x <<","<< i.y<< ") ";
+	for (auto i = route.rbegin(); i != route.rend();++i) {
+		std::cout << "(" <<i->x <<","<< i->y<< ") ";
 	}
 	std::cout << std::endl;
 }
@@ -139,9 +144,8 @@ int main() {
 	display(mat);
 	std::cout << std::endl;
 	auto matWithFrame = createFrame(mat);
-	/*std::vector<Point> route = */lee(matWithFrame, Point(4, 1), Point(3,2));
+	std::vector<Point> route = lee(matWithFrame, Point(4, 1), Point(3,3));
 	display(matWithFrame);
-	
-	//displayRoute(route);
+	displayRoute(route);
 	return 0;
 }
