@@ -89,7 +89,7 @@ public:
 			return val;
 		}
 	}
-	void display() {
+	/*void display() {
 		Node<T>* temp = this->first;
 		if (this->isEmpty()) {
 			std::cout << "Empty queue" << std::endl;
@@ -100,5 +100,5 @@ public:
 			temp = temp->getNext();
 		}
 		std::cout << std::endl;
-	}
+	}*/
 };
