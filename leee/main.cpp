@@ -117,15 +117,19 @@ std::vector<Point> lee(std::vector<std::vector<int>> &mat, Point start, Point de
 	std::vector<Point> route;
 	route.push_back(current);
 
-	
 	while (!current.isEqual(start)) {
 		for (int i = 0; i < 4; i++) {
+			
+			int d = mat[current.x][current.y] - mat[current.x + dx[i]][current.y + dy[i]];
+			std::cout << d << " " << std::endl;
+			if(mat[current.x + dx[i]][current.y + dy[i]] >= 0)
 			if (mat[current.x][current.y] - mat[current.x + dx[i]][current.y + dy[i]] == 1) {
 				current.x = current.x + dx[i];
 				current.y = current.y + dy[i];
 				route.push_back(current);
 			}
 		}
+
 	}
 
 	return route;
@@ -144,7 +148,7 @@ int main() {
 	display(mat);
 	std::cout << std::endl;
 	auto matWithFrame = createFrame(mat);
-	std::vector<Point> route = lee(matWithFrame, Point(4, 1), Point(3,3));
+	std::vector<Point> route = lee(matWithFrame, Point(4, 1), Point(7,3));
 	display(matWithFrame);
 	displayRoute(route);
 	return 0;
